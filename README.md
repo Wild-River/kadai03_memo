@@ -30,5 +30,5 @@ https://wild-river.github.io/kadai03_memo/
 ## ⑦フリー項目（感想、シェアしたいこと等なんでも）
 
 我が家ではSwitch2の「マリオカートワールド」にはまっており、キャラクターやマシンの「隠しステータス」を知りたいと思って管理画面を作りました。
-参考にしたのはこちらのスプレッドシートです！
+こちらのスプレッドシートを参考にして作りました！
 https://docs.google.com/spreadsheets/d/1EQd2XYGlB3EFFNE-35hFLaBzJo4cipU9DZT4MRSjBlc/edit?gid=2095389608#gid=2095389608
