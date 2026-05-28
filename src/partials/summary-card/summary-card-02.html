@@ -1,0 +1,30 @@
+<div class="grid grid-cols-1">
+  <!-- Metric Item Start -->
+  <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] md:p-6">
+    <div class="flex items-center justify-center rounded-xl bg-gray-100 dark:bg-gray-800">
+      <img :src="vehicle?.image || `./images/vehicles/${vehicle?.name?.toLowerCase()}.webp`"
+        :alt="vehicle?.name_ja ?? ''" class="object-contain rounded-xl" />
+    </div>
+
+    <div class="mt-5 flex items-end justify-between">
+      <div>
+        <h4 class="mt-2 text-title-sm font-bold text-gray-800 dark:text-white/90" x-text="vehicle?.name_ja ?? ''">
+        </h4>
+        <p class="mx-auto mt-2 w-full max-w-[480px] text-sm text-gray-500 sm:text-base"
+          x-text="vehicle?.description ?? ''">
+        </p>
+      </div>
+    </div>
+
+    <div class="mt-5 flex items-center gap-5">
+      <button @click="editVehicle(vehicle)"
+        class="inline-flex items-center gap-2 px-4 py-3 text-sm font-medium text-white transition rounded-lg bg-brand-500 shadow-theme-xs hover:bg-brand-600">編集
+      </button>
+      <button @click="deleteVehicle(vehicle)"
+        class="inline-flex items-center gap-2 px-4 py-3 text-sm font-medium text-white transition rounded-lg bg-brand-500 shadow-theme-xs hover:bg-brand-600">削除
+      </button>
+    </div>
+  </div>
+  <!-- Metric Item End -->
+
+</div>

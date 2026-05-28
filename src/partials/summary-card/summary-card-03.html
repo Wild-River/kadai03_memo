@@ -1,0 +1,45 @@
+<div class="grid grid-cols-1 gap-4">
+
+  <!-- キャラクター選択 -->
+  <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] md:p-6">
+    <h5 class="mb-3 text-sm font-semibold text-gray-500 dark:text-gray-400">キャラクター</h5>
+    <select
+      class="w-full rounded-lg border border-gray-200 bg-white px-4 py-2 dark:border-gray-800 dark:bg-gray-900 dark:text-white"
+      @change="
+        character = mkCharacters.find(c => c.name === $event.target.value);
+        combined = calcCombined(character, vehicle);
+        $nextTick(() => setTimeout(() => chart03(combined), 50))
+      ">
+      <template x-for="c in mkCharacters" :key="c.name">
+        <option :value="c.name" :selected="character?.name === c.name" x-text="c.name_ja"></option>
+      </template>
+    </select>
+
+    <div class="mt-4 flex items-center justify-center rounded-xl bg-gray-100 dark:bg-gray-800">
+      <img :src="character ? `./images/characters/${character.name.toLowerCase()}.webp` : ''"
+        :alt="character?.name_ja ?? ''" class="object-contain rounded-xl" />
+    </div>
+  </div>
+
+  <!-- マシン選択 -->
+  <div class="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-white/[0.03] md:p-6">
+    <h5 class="mb-3 text-sm font-semibold text-gray-500 dark:text-gray-400">マシン</h5>
+    <select
+      class="w-full rounded-lg border border-gray-200 bg-white px-4 py-2 dark:border-gray-800 dark:bg-gray-900 dark:text-white"
+      @change="
+        vehicle = mkVehicles.find(v => v.name === $event.target.value);
+        combined = calcCombined(character, vehicle);
+        $nextTick(() => setTimeout(() => chart03(combined), 50))
+      ">
+      <template x-for="v in mkVehicles" :key="v.name">
+        <option :value="v.name" :selected="vehicle?.name === v.name" x-text="v.name_ja"></option>
+      </template>
+    </select>
+
+    <div class="mt-4 flex items-center justify-center rounded-xl bg-gray-100 dark:bg-gray-800">
+      <img :src="vehicle ? `./images/vehicle/${vehicle.name.toLowerCase()}.webp` : ''" :alt="vehicle?.name_ja ?? ''"
+        class="object-contain rounded-xl" />
+    </div>
+  </div>
+
+</div>

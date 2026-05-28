@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>
+    マリオカートダッシュボード
+  </title>
+</head>
+
+<body x-data="{//変数の定義
+  page: 'character',
+  loaded: true,
+  darkMode: false,
+  stickyMenu: false,
+  sidebarToggle: false,
+  scrollTop: false,
+  character: null,
+  mkCharacters: [],
+  vehicle: null,
+  mkVehicles: [],
+  combined: null,
+  characterStats: null,
+  vehicleStats: null,
+}" x-init=" //初期処理
+  // localStorageからデータを読み込む
+  mkCharacters = JSON.parse(localStorage.getItem('mk_characters') || '[]');
+  mkVehicles = JSON.parse(localStorage.getItem('mk_vehicles') || '[]');
+  // 初期キャラクターをセット
+  character = mkCharacters.find(c => c.name === 'Mario') ?? null;
+  vehicle = mkVehicles.find(c => c.name === 'standard_kart') ?? null;
+  combined = calcCombined(character, vehicle);
+  characterStats = window.convertStatsHalf(character);
+  vehicleStats = window.convertStatsHalf(vehicle);
+  // チャートを描画
+  $nextTick(() => setTimeout(() => {
+    if (page === 'character') chart01(character.name);
+    if (page === 'vehicle') chart02(vehicle.name);
+    if (page === 'combine') chart03(combined);
+  }, 50))
+" :class="{'dark bg-gray-900': darkMode === true}">
+  <!-- ===== Preloader Start ===== -->
+  <include src="./partials/preloader.html"></include>
+  <!-- ===== Preloader End ===== -->
+
+  <!-- ===== Page Wrapper Start ===== -->
+  <div class="flex h-screen overflow-hidden">
+    <!-- ===== Sidebar Start ===== -->
+    <include src="./partials/sidebar.html"></include>
+    <!-- ===== Sidebar End ===== -->
+
+    <!-- ===== Content Area Start ===== -->
+    <div class="relative flex flex-col flex-1 overflow-x-hidden overflow-y-auto">
+      <!-- Small Device Overlay Start -->
+      <include src="./partials/overlay.html" />
+      <!-- Small Device Overlay End -->
+
+      <!-- ===== Header Start ===== -->
+      <include src="./partials/header.html" />
+      <!-- ===== Header End ===== -->
+
+      <!-- ===== Main Content Start ===== -->
+      <main>
+        <div class="p-4 mx-auto max-w-(--breakpoint-2xl) md:p-6">
+          <div class="grid grid-cols-12 gap-4 md:gap-6">
+
+            <!-- キャラクター表示 -->
+            <template x-if="page === 'character'">
+              <div class="col-span-12 grid grid-cols-12 gap-4 md:gap-6">
+                <div class="col-span-12 space-y-6 xl:col-span-5">
+                  <include src="./partials/summary-card/summary-card-01.html" />
+                </div>
+                <div class="col-span-12 xl:col-span-7">
+                  <include src="./partials/chart/chart-01.html" />
+                </div>
+              </div>
+            </template>
+
+            <!-- マシン表示 -->
+            <template x-if="page === 'vehicle'">
+              <div class="col-span-12 grid grid-cols-12 gap-4 md:gap-6">
+                <div class="col-span-12 space-y-6 xl:col-span-5">
+                  <include src="./partials/summary-card/summary-card-02.html" />
+                </div>
+                <div class="col-span-12 xl:col-span-7">
+                  <include src="./partials/chart/chart-02.html" />
+                </div>
+              </div>
+            </template>
+
+            <!-- 組み合わせ表示 -->
+            <template x-if="page === 'combine'">
+              <div class="col-span-12 grid grid-cols-12 gap-4 md:gap-6">
+                <div class="col-span-12 space-y-6 xl:col-span-3">
+                  <include src="./partials/summary-card/summary-card-03.html" />
+                </div>
+                <div class="col-span-12 xl:col-span-9">
+                  <include src="./partials/chart/chart-03.html" />
+                </div>
+              </div>
+            </template>
+
+          </div>
+        </div>
+      </main>
+      <!-- ===== Main Content End ===== -->
+    </div>
+    <!-- ===== Content Area End ===== -->
+  </div>
+  <!-- ===== Page Wrapper End ===== -->
+</body>
+
+</html>

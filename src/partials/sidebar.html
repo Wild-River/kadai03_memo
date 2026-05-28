@@ -1,0 +1,170 @@
+<aside :class="sidebarToggle ? 'translate-x-0 lg:w-[90px]' : '-translate-x-full'"
+  class="sidebar fixed left-0 top-0 z-9999 flex h-screen w-[290px] flex-col overflow-y-hidden border-r border-gray-200 bg-white px-5 dark:border-gray-800 dark:bg-black lg:static lg:translate-x-0">
+  <!-- SIDEBAR HEADER -->
+  <div :class="sidebarToggle ? 'justify-center' : 'justify-between'"
+    class="flex items-center gap-2 pt-8 sidebar-header pb-7">
+    <a href="index.html">
+      <span class="logo" :class="sidebarToggle ? 'hidden' : ''">
+        <img class="dark:hidden" src="./images/logo/logo.svg" alt="Logo" />
+        <img class="hidden dark:block" src="./images/logo/logo-dark.svg" alt="Logo" />
+      </span>
+
+      <img class="logo-icon" :class="sidebarToggle ? 'lg:block' : 'hidden'" src="./images/logo/logo-icon.svg"
+        alt="Logo" />
+    </a>
+  </div>
+  <!-- SIDEBAR HEADER -->
+
+  <div class="flex flex-col overflow-y-auto duration-300 ease-linear no-scrollbar">
+    <!-- Sidebar Menu -->
+    <nav x-data="{selected: 'character'}">
+      <!-- Menu Group -->
+      <div>
+        <h3 class="mb-4 text-xs uppercase leading-[20px] text-gray-400">
+          <span class="menu-group-title" :class="sidebarToggle ? 'lg:hidden' : ''">
+            MENU
+          </span>
+
+          <svg :class="sidebarToggle ? 'lg:block hidden' : 'hidden'" class="mx-auto fill-current menu-group-icon"
+            width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" clip-rule="evenodd"
+              d="M5.99915 10.2451C6.96564 10.2451 7.74915 11.0286 7.74915 11.9951V12.0051C7.74915 12.9716 6.96564 13.7551 5.99915 13.7551C5.03265 13.7551 4.24915 12.9716 4.24915 12.0051V11.9951C4.24915 11.0286 5.03265 10.2451 5.99915 10.2451ZM17.9991 10.2451C18.9656 10.2451 19.7491 11.0286 19.7491 11.9951V12.0051C19.7491 12.9716 18.9656 13.7551 17.9991 13.7551C17.0326 13.7551 16.2491 12.9716 16.2491 12.0051V11.9951C16.2491 11.0286 17.0326 10.2451 17.9991 10.2451ZM13.7491 11.9951C13.7491 11.0286 12.9656 10.2451 11.9991 10.2451C11.0326 10.2451 10.2491 11.0286 10.2491 11.9951V12.0051C10.2491 12.9716 11.0326 13.7551 11.9991 13.7551C12.9656 13.7551 13.7491 12.9716 13.7491 12.0051V11.9951Z"
+              fill="" />
+          </svg>
+        </h3>
+
+        <ul class="flex flex-col gap-4 mb-6">
+
+          <!-- キャラクター親メニュー -->
+          <li>
+            <a href="#" @click.prevent="selected = (selected === 'character' ? '' : 'character');
+            page = 'character';
+            characterStats = convertStatsHalf(character);
+            $nextTick(() => setTimeout(() => chart01(character.name), 50))
+            " class="menu-item group" :class=" (selected === 'character') ? 'menu-item-active' : 'menu-item-inactive'">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="lucide lucide-users-icon lucide-users">
+                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+                <path d="M16 3.128a4 4 0 0 1 0 7.744" />
+                <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+                <circle cx="9" cy="7" r="4" />
+              </svg>
+              <span class="menu-item-text" :class="sidebarToggle ? 'lg:hidden' : ''">
+                キャラクター
+              </span>
+              <svg class="menu-item-arrow"
+                :class="[(selected === 'character') ? 'menu-item-arrow-active' : 'menu-item-arrow-inactive', sidebarToggle ? 'lg:hidden' : '' ]"
+                width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M4.79175 7.39584L10.0001 12.6042L15.2084 7.39585" stroke="" stroke-width="1.5"
+                  stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </a>
+            <!-- Dropdown Menu Start -->
+            <div class="overflow-hidden transform translate" :class="(selected === 'character') ? 'block' :'hidden'">
+              <ul :class="sidebarToggle ? 'lg:hidden' : 'flex'" class="flex flex-col gap-1 mt-2 menu-dropdown pl-9">
+                <template x-for="c in mkCharacters" :key="c.name">
+                  <li>
+                    <a href="#" @click.prevent="
+                      page = 'character';
+                      character = mkCharacters.find(ch=> ch.name === c.name);
+                      characterStats = convertStatsHalf(character);
+                      $nextTick(() => chart01(c.name))
+                      " class="menu-dropdown-item group"
+                      :class="character?.name === c.name ? 'menu-dropdown-item-active' : 'menu-dropdown-item-inactive'">
+                      <span x-text="c.name_ja"></span>
+                    </a>
+                  </li>
+                </template>
+
+                <!-- 追加ボタン -->
+                <li>
+                  <a href="add-character.html" class="menu-dropdown-item group menu-dropdown-item-inactive">
+                    ＋ キャラクター追加
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </li>
+
+          <!-- マシン親メニュー -->
+          <li>
+            <a href="#" @click.prevent="selected = (selected === 'vehicle' ? '' : 'vehicle');
+              page = 'vehicle';
+              vehicleStats = convertStatsHalf(vehicle);
+              $nextTick(() => setTimeout(() => chart02(vehicle.name), 50))
+             " class="menu-item group" :class="(selected === 'vehicle') ? 'menu-item-active' : 'menu-item-inactive'">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="lucide lucide-car-icon lucide-car">
+                <path
+                  d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2" />
+                <circle cx="7" cy="17" r="2" />
+                <path d="M9 17h6" />
+                <circle cx="17" cy="17" r="2" />
+              </svg>
+              <span class="menu-item-text" :class="sidebarToggle ? 'lg:hidden' : ''">
+                マシン
+              </span>
+              <svg class="menu-item-arrow absolute right-2.5 top-1/2 -translate-y-1/2 stroke-current"
+                :class="[(selected === 'vehicle') ? 'menu-item-arrow-active' : 'menu-item-arrow-inactive', sidebarToggle ? 'lg:hidden' : '' ]"
+                width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M4.79175 7.39584L10.0001 12.6042L15.2084 7.39585" stroke="" stroke-width="1.5"
+                  stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </a>
+            <!-- Dropdown Menu Start -->
+            <div class="overflow-hidden transform translate" :class="(selected === 'vehicle') ? 'block' :'hidden'">
+              <ul :class="sidebarToggle ? 'lg:hidden' : 'flex'" class="flex flex-col gap-1 mt-2 menu-dropdown pl-9">
+                <template x-for="v in mkVehicles" :key="v.name">
+                  <li>
+                    <a href="#" @click.prevent="
+                      page = 'vehicle';
+                      vehicle = mkVehicles.find(vh => vh.name === v.name);
+                      vehicleStats = convertStatsHalf(vehicle);
+                      $nextTick(() => setTimeout(() => chart02(v.name), 50))
+                    " class="menu-dropdown-item group"
+                      :class="vehicle?.name === v.name ? 'menu-dropdown-item-active' : 'menu-dropdown-item-inactive'">
+                      <span x-text="v.name_ja"></span>
+                    </a>
+                  </li>
+                </template>
+
+                <!-- 追加ボタン -->
+                <li>
+                  <a href="add-vehicle.html" class="menu-dropdown-item group menu-dropdown-item-inactive">
+                    ＋ マシン追加
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </li>
+
+          <!-- 組み合わせ -->
+          <li>
+            <a href="#" @click.prevent="
+              selected = (selected === 'combine' ? '' : 'combine');
+              page = 'combine';
+              combined = calcCombined(character, vehicle);
+              $nextTick(() => setTimeout(() => chart03(combined), 50))
+            " class="menu-item group" :class="(selected === 'combine') ? 'menu-item-active' : 'menu-item-inactive'">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="lucide lucide-wrench-icon lucide-wrench">
+                <path
+                  d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.106-3.105c.32-.322.863-.22.983.218a6 6 0 0 1-8.259 7.057l-7.91 7.91a1 1 0 0 1-2.999-3l7.91-7.91a6 6 0 0 1 7.057-8.259c.438.12.54.662.219.984z" />
+              </svg>
+              <span class="menu-item-text" :class="sidebarToggle ? 'lg:hidden' : ''">
+                組み合わせ
+              </span>
+            </a>
+          </li>
+
+        </ul>
+      </div>
+
+    </nav>
+    <!-- Sidebar Menu -->
+
+  </div>
+</aside>
