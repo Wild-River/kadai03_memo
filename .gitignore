@@ -3,5 +3,5 @@ package-lock.json
 .vscode/
 .DS_Store
 **/.DS_Store
-**/partials/.DS_Store
+# **/partials/.DS_Store
 # /build
