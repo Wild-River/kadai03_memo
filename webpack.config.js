@@ -121,4 +121,7 @@ module.exports = (env) => ({
   },
   target: "web", // fix for "browserslist" error message
   stats: "errors-only", // suppress irrelevant log messages
+  performance: {
+    hints: false,
+  },
 });
