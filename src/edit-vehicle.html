@@ -42,7 +42,7 @@
   save() {
     const vehicles = JSON.parse(localStorage.getItem('mk_vehicles') || '[]');
     const index = vehicles.findIndex(v => v.name === this.form.name);
-  if (index !== -1) {
+  if (index >= 0) {
     vehicles[index] = this.form;
   }
     localStorage.setItem('mk_vehicles', JSON.stringify(vehicles));
