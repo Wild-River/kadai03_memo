@@ -6,7 +6,6 @@
   "scripts": {
     "start": "webpack serve --open --config webpack.config.js",
     "build": "webpack --config webpack.config.js && cp README.md build/README.md",
-    "dev": "webpack --config webpack.config.js --mode development",
     "deploy": "npm run build && gh-pages -d build",
     "sort": "npx prettier --write src"
   },

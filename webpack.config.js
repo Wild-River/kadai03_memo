@@ -21,34 +21,15 @@ const processNestedHtml = (content, loaderContext, dir = null) =>
       );
     });
 
-// HTML generation
 const paths = [];
-// const generateHTMLPlugins = () =>
-//   glob.sync("./src/*.html").map((dir) => {
-//     const filename = path.basename(dir);
-
-//     if (filename !== "404.html") {
-//       paths.push(filename);
-//     }
-
-//     return new HtmlWebpackPlugin({
-//       filename,
-//       template: `./src/${filename}`,
-//       favicon: `./src/images/favicon.ico`,
-//       inject: "body",
-//     });
-//   });
-const htmlFiles = [
-  "index.html",
-  "add-character.html",
-  "edit-character.html",
-  "add-vehicle.html",
-  "edit-vehicle.html",
-];
-
 const generateHTMLPlugins = () =>
-  htmlFiles.map((filename) => {
-    paths.push(filename);
+  glob.sync("./src/*.html").map((dir) => {
+    const filename = path.basename(dir);
+
+    if (filename !== "404.html") {
+      paths.push(filename);
+    }
+
     return new HtmlWebpackPlugin({
       filename,
       template: `./src/${filename}`,
@@ -58,10 +39,10 @@ const generateHTMLPlugins = () =>
   });
 
 module.exports = (env) => ({
-  mode: env?.minimize ? "production" : "none",
+  mode: env?.nominimize ? "none" : "production",
   optimization: {
-    minimize: env?.minimize ?? false,
-    minimizer: env?.minimize ? [new TerserPlugin()] : [],
+    minimize: !env?.nominimize,
+    minimizer: [new TerserPlugin()],
   },
   entry: "./src/js/index.js",
   devServer: {
