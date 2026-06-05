@@ -33,5 +33,5 @@ https://wild-river.github.io/kadai03_memo/
 https://docs.google.com/spreadsheets/d/1EQd2XYGlB3EFFNE-35hFLaBzJo4cipU9DZT4MRSjBlc/edit?gid=2095389608#gid=2095389608
 
 当アプリでは、任天堂のネットワークサービスにおける著作物利用ガイドラインを遵守しております。<br>
-https://www.nintendo.co.jp/networkservice_guideline/ja/index.html
+https://www.nintendo.co.jp/networkservice_guideline/ja/index.html<br>
 万一、権利者からのご指摘やご要望があった場合には、内容を確認のうえ適切に対応いたします。
