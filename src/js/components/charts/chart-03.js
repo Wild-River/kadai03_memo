@@ -155,7 +155,9 @@ const chart03 = (combined) => {
       document.querySelector("#chartThree"),
       chartThreeOptions,
     );
-    chartThreeInstance.render();
+    chartThreeInstance.render().then(() => {
+      window.dispatchEvent(new Event('resize'));
+    });
   }
 };
 
